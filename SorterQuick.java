@@ -11,31 +11,48 @@ public class SorterQuick extends SorterBase {
   
   // sort the elements from i=lo...hi (inclusive)
   public void sortRange(int lo, int hi) {
-    // QuickSort is a 'recursive' sort; because this function calls itself.
-    // Here's how it works. Copy out values at indices lo...hi into a temporary external array
-    // Pick ay element of the temporary array (might as well be the first or last) to be the 'pivot'
-    // Go through the non-pivot elements of the temporary array,
-    // Stick the less-than-pivot values back in the internal array, in positions lo, lo+1, lo+2, ...
-    // Stick the more-than-pivot values back in the internal array, in positions hi, hi-1, hi-2, ...
-    // When you're done there will be one spot left to put the pivot
-    // Now lo...hi is reordered into 3 groups, from left to right:
-    // 1. less-than-pivot 
-    // 2. then the  pivot (group of one)
-    // 3. more-than-pivot 
-    // The pivot is EXACTLY where it belongs in the final ordering (why?)
-    // Groups 1 and 3 are also occupying the ranges they should occupy in the final ordering (why?),
-    // but out of order in those ranges.
-    // The secret sauce is, at the end of this function sortRange() we call this same function sortRange() -- 
-    // twice; once each for the sub-ranges that define groups 1 and 3.
+    if (hi <= lo) {  // sort i...i, i.e. just one thing
+      return;        // nothing to do
+    }
     
-    // VERY important for recursive functions: you MUST protect against infinite recursion by opening the
-    // function by handling the appropriate 'base cases', like what if the range includes only 1 or 2 numbers? 
-    // Or even what if the range includes 0 numbers?
+    if (hi == lo+1) { // sort i...i+1, i.e. just two adjacent things
+      if (indexLessThan(hi, lo)) {
+        indexSwap(lo, hi);
+      }
+      return;
+    }
     
-    // I have set this up so that the range lo,hi is inclusive (on both ends), and the main sort() function
-    // calls sortRange(0, getSize()-1); If it works better for the way you want to think about it, feel
-    // free to redefine it more java-style, like sortRange(int first_index, int last_index_plus_one), 
-    // in which case you would change the main function to sortRange(0, getSize())
+    // ok so we have at least 3 items to sort.
+    // copy them out into a temp array
+    int n = hi-lo+1; // e.g. lo=10, hi=13 --> n=4
+    int[] temp = new int[n];
+    for (int i=lo; i<=hi; ++i) { // inclusive of hi
+      temp[i-lo] = getNum(i);    // getCounter++
+    }
+    
+    int pivot = temp[0];
+    int isma = lo; // this is where the next <pivot value will go
+    int ibig = hi; // this is where the next >pivot value will go
+    for (int i=1; i<n; ++i)  { // not 0, save the pivot for last
+      if (valueLessThan(temp[i], pivot)) { // compareCounter++
+        setNum(isma, temp[i]);             // setCounter++
+        isma++;                            // skooch
+      } else {       // temp[i] > pivot
+        setNum(ibig, temp[i]);             // setCounter
+        ibig--;
+      }
+    }
+    // when we're all done, pivot goes in isma=ibig
+    if (isma != ibig) {
+      System.out.printf("ERROR: unexpected condition!!");
+    }
+    setNum(isma, pivot);
+    
+    // now all of lo...isma-1 are < pivot
+    // and all of ibig+1...hi are > pivot
+    sortRange(lo, isma-1);
+    // pivot is already in the right place
+    sortRange(ibig+1, hi);
   }
  
 }

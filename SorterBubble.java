@@ -6,10 +6,17 @@ public class SorterBubble extends SorterBase {
   }
   
   public void sort() {
-    // Implement bubble sort
-    // Starting by considering internal values 0 and 1 to be in a 'bubble', swap them if they are out of order.
-    // Then bubble 1 and 2, then 2 and 3, ... and let the 'bubble' bubble all the way to the end
-    // Repeat, until the whole array is sorted (how many iterations will that take?)
+    int n = getSize(); // this is how many we have
+    for (int bubbi=n-1; bubbi>=0; bubbi--) {   // bubbi = n-1, n-2, ...0
+      // inside this loop we will start at 0 and bubble the maximum up to position bubbi
+      for (int i=0; i<bubbi; ++i) {            // i   = 0...bubbi-1
+                                               // i+1 = 1...bubbi
+        // look at i and i+1; bubble up the larger one
+        if (indexLessThan(i+1, i)) {
+          indexSwap(i, i+1);
+        }
+      }
+    }
   }
 
   
