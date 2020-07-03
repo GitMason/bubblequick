@@ -1,13 +1,16 @@
 import java.util.Random;
 
 public abstract class SorterBase {
-
+  
   // declare member variables here
   // make them all private, and access them only through the accessors below
+  private int[] numList;
   
   public SorterBase(String a, // the name of the sort algorithm, for print()
                     int n)    // size of internal array 
   {
+    newIncreasing(n);
+    
     // populate an internal array of numbers 0...n-1 and scramble it
   }
  
@@ -20,7 +23,6 @@ public abstract class SorterBase {
   public int  getNum(int i)      { return 0; } // fetch an internal array value out (and count it)
   public void setNum(int i,int x)    {   }     // set a value into the internal array (and count it)
   public void resetCounters() {  }
-  public int[] numList;
   
   
   public void newIncreasing(int n) { // populate internal array 0...n-1
@@ -32,10 +34,9 @@ public abstract class SorterBase {
   } 
   
   public void newDecreasing(int n) {   // populate internal array n-1...0
-    int[] numList;
     numList = new int[n];
-    for (int i = n-1; i >= 0; i--) {
-      numList[i] = i;
+    for (int i = 0; i < n; i++) {
+      numList[i] = n - (i + 1);
       //System.out.println(numList[i]);
     }
   }
@@ -51,11 +52,9 @@ public abstract class SorterBase {
   public boolean isSorted() { return false;} // test whether internal array is sorted (in increasing order)
   
   public void print(boolean print_nums) {   // print all the counters, and optionally the internal array
-    if (print_nums == false) {}
-    else {
+    if (print_nums) {
       for (int i = 0; i < numList.length; i++) {
-        System.out.print(numList[i]);
-      }
+        System.out.print(numList[i] + " ");}
       System.out.println("");
     }
   }
