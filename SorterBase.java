@@ -4,7 +4,9 @@ public abstract class SorterBase {
   
   // declare member variables here
   // make them all private, and access them only through the accessors below
-  private int[] numList;
+  private int[] numList;      // array that contains the numbers that will be sorted
+  private int   getCount = 0; // counts how many times getNum has been called
+  private int   setCount = 0; // counts how many times setNum has been called 
   
   public SorterBase(String a, // the name of the sort algorithm, for print()
                     int n)    // size of internal array 
@@ -20,9 +22,18 @@ public abstract class SorterBase {
   public long   getNumCompares() { return 0; }
   public long   getNumGets()     { return 0; }
   public long   getNumSets()     { return 0; }
-  public int  getNum(int i)      { return 0; } // fetch an internal array value out (and count it)
-  public void setNum(int i,int x)    {   }     // set a value into the internal array (and count it)
-  public void resetCounters() {  }
+  public int  getNum(int i){                    // fetch an internal array value out (and count it)
+    getCount++;
+    return(numList[i]); 
+  } 
+  public void setNum(int i, int x) {            // set a value into the internal array (and count it)
+    setCount++;
+    numList[i] = x;
+  }
+  public void resetCounters() {
+    getCount = 0;
+    setCount = 0;
+  }
   
   
   public void newIncreasing(int n) { // populate internal array 0...n-1
@@ -53,10 +64,13 @@ public abstract class SorterBase {
   
   public void print(boolean print_nums) {   // print all the counters, and optionally the internal array
     if (print_nums) {
+      System.out.println("The method getNum has been called " + getCount + " times.");
+      System.out.println("The method setNum has been called " + setCount + " times.");
+      
       for (int i = 0; i < numList.length; i++) {
         System.out.print(numList[i] + " ");
       }
-      System.out.println("");
+      System.out.print("\n");
     }
   }
  
