@@ -49,12 +49,13 @@ public abstract class SorterBase {
     // You will need to google to find out how to get java to give you random numbers 0 <= j < n
   }
   
-  public boolean isSorted() { return false;} // test whether internal array is sorted (in increasing order)
+  public boolean isSorted() {return false;} // test whether internal array is sorted (in increasing order)
   
   public void print(boolean print_nums) {   // print all the counters, and optionally the internal array
     if (print_nums) {
       for (int i = 0; i < numList.length; i++) {
-        System.out.print(numList[i] + " ");}
+        System.out.print(numList[i] + " ");
+      }
       System.out.println("");
     }
   }
