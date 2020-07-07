@@ -1,4 +1,4 @@
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class SorterBase {
   
@@ -11,11 +11,10 @@ public abstract class SorterBase {
   public SorterBase(String a, // the name of the sort algorithm, for print()
                     int n)    // size of internal array 
   {
-    newIncreasing(n);
+    newScramble(n);
     
     // populate an internal array of numbers 0...n-1 and scramble it
   }
- 
   public String getName()        { return ""; } // algorithm name
   public int    getSize()        { return 0; }  // internal array length
   public long   getNumSwaps()    { return 0; }  // maintain counters for various operations
@@ -53,6 +52,13 @@ public abstract class SorterBase {
   }
   
   public void newScramble(int n) {     // populate internal array with values 0...n-1, scrambled
+    newIncreasing(n);
+    resetCounters();
+    for(int i = 0; i < n; i++){
+      indexSwap(i, ThreadLocalRandom.current().nextInt(0, n));
+    }
+
+
     // the standard way to scramble n numbers is
     // i=0; j=a random index 0 <= j < n: swap the values at indices i and j
     // i=1; j=a random index 0 <= j < n: swap the values at indices i and j
@@ -81,7 +87,13 @@ public abstract class SorterBase {
   public boolean valueLessThan(int x, int y) { return false; }
   
   // this is for swapping internal array values at indices i and j -- must be counted in getNumSwaps()
-  public void indexSwap(int i, int j) {  }
+  public void indexSwap(int i, int j) {
+  int holder; // to hold one of the swapped values
+  holder = numList[j];
+  numList[j] = numList[i];
+  numList[i] = holder;
+  
+  }
   
   // note there is no valueSwap(int x, int y), because java only passes by value, not by reference, 
   // so a function valueSwap() cannot cause the values of x and y to swap in the perspective of the caller

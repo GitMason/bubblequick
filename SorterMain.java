@@ -2,8 +2,6 @@ public class SorterMain {
   public static void main(String[] args) { 
     
     SorterBubble bubbly = new SorterBubble(10);  // construct a bubble-sorter with 1..10 scrambled
-    bubbly.setNum(3, 100);
-    bubbly.getNum(3);
     bubbly.print(true);                          // print the state of the sorter (true-->and also all 10 numbers)
     //bubbly.sort();                               // perform a bubble sort to put the numbers in order
     bubbly.resetCounters();
