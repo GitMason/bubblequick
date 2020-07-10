@@ -4,9 +4,11 @@ public abstract class SorterBase {
   
   // declare member variables here
   // make them all private, and access them only through the accessors below
-  private int[] numList;      // array that contains the numbers that will be sorted
-  private int   getCount = 0; // counts how many times getNum has been called
-  private int   setCount = 0; // counts how many times setNum has been called 
+  private int[] numList;        // array that contains the numbers that will be sorted
+  private long   getCount = 0;  // counts how many times getNum has been called
+  private long   setCount = 0;  // counts how many times setNum has been called 
+  private long   swapCount = 0; // counts how many times indexSwap has been called
+  private long   compCount = 0; // counts how many times indexLessThan and valueLessThan have been called
   
   public SorterBase(String a, // the name of the sort algorithm, for print()
                     int n)    // size of internal array 
@@ -16,11 +18,12 @@ public abstract class SorterBase {
     // populate an internal array of numbers 0...n-1 and scramble it
   }
   public String getName()        { return ""; } // algorithm name
-  public int    getSize()        { return 0; }  // internal array length
-  public long   getNumSwaps()    { return 0; }  // maintain counters for various operations
-  public long   getNumCompares() { return 0; }
-  public long   getNumGets()     { return 0; }
-  public long   getNumSets()     { return 0; }
+  public int    getSize()        { return numList.length; }  // internal array length
+  public long   getNumSwaps()    { return swapCount; }  // maintain counters for various operations
+  public long   getNumCompares() { return compCount; }
+  public long   getNumGets()     { return getCount; }
+  public long   getNumSets()     { return setCount; }
+  
   public int  getNum(int i){                    // fetch an internal array value out (and count it)
     getCount++;
     return(numList[i]); 
@@ -32,6 +35,7 @@ public abstract class SorterBase {
   public void resetCounters() {
     getCount = 0;
     setCount = 0;
+    swapCount = 0;
   }
   
   
@@ -53,9 +57,9 @@ public abstract class SorterBase {
   
   public void newScramble(int n) {     // populate internal array with values 0...n-1, scrambled
     newIncreasing(n);
-    resetCounters();
     for(int i = 0; i < n; i++){
       indexSwap(i, ThreadLocalRandom.current().nextInt(0, n));
+    resetCounters();
     }
 
 
@@ -81,18 +85,24 @@ public abstract class SorterBase {
   }
  
   // this is for comparing internal array values at indices i and j -- must be counted in getNumCompares()
-  public boolean indexLessThan(int i, int j) { return false; }
+  public boolean indexLessThan(int i, int j) {
+    if(numList[i] < numList[j]) {return true;}
+    else {return false;}
+  }
   
   // this is for comparing actual values x and y -- must be counted in numCompares()
-  public boolean valueLessThan(int x, int y) { return false; }
+  public boolean valueLessThan(int x, int y) { 
+    if(x < y) {return true;}
+    else {return false;}
+  }
   
   // this is for swapping internal array values at indices i and j -- must be counted in getNumSwaps()
   public void indexSwap(int i, int j) {
-  int holder; // to hold one of the swapped values
-  holder = numList[j];
-  numList[j] = numList[i];
-  numList[i] = holder;
-  
+    int holder; // to hold one of the swapped values
+    holder = numList[j];
+    numList[j] = numList[i];
+    numList[i] = holder;
+    swapCount++;
   }
   
   // note there is no valueSwap(int x, int y), because java only passes by value, not by reference, 
