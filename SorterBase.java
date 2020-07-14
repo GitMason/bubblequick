@@ -73,10 +73,10 @@ public abstract class SorterBase {
   public boolean isSorted() {return false;} // test whether internal array is sorted (in increasing order)
   
   public void print(boolean print_nums) {   // print all the counters, and optionally the internal array
+    System.out.print("ALG,Bubble,N," + getSize() + ",COMPS," + getNumCompares() + ",SWAPS," + getNumSwaps() + ",GETS," + getNumGets() + ",SETS," + getNumGets() + ",");
+    System.out.print("TOTAL," + getSize() + compCount + swapCount + getCount + setCount + ",");
+    System.out.print("\n");
     if (print_nums) {
-      System.out.println("The method getNum has been called " + getCount + " times.");
-      System.out.println("The method setNum has been called " + setCount + " times.");
-      
       for (int i = 0; i < numList.length; i++) {
         System.out.print(numList[i] + " ");
       }
@@ -86,12 +86,14 @@ public abstract class SorterBase {
  
   // this is for comparing internal array values at indices i and j -- must be counted in getNumCompares()
   public boolean indexLessThan(int i, int j) {
+    compCount++;
     if(numList[i] < numList[j]) {return true;}
     else {return false;}
   }
   
   // this is for comparing actual values x and y -- must be counted in numCompares()
   public boolean valueLessThan(int x, int y) { 
+    compCount++;
     if(x < y) {return true;}
     else {return false;}
   }

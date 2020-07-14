@@ -4,8 +4,8 @@ public class SorterMain {
     SorterBubble bubbly = new SorterBubble(10);  // construct a bubble-sorter with 1..10 scrambled
     bubbly.newScramble(10);
     bubbly.print(true);                          // print the state of the sorter (true-->and also all 10 numbers)
-    //bubbly.sort();                               // perform a bubble sort to put the numbers in order
-    //bubbly.print(true);                          // print the state again, as well as the sorted numbers
+    bubbly.sort();                               // perform a bubble sort to put the numbers in order
+    bubbly.print(true);                          // print the state again, as well as the sorted numbers
 
     
     
