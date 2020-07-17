@@ -76,7 +76,7 @@ public abstract class SorterBase {
   
   public boolean isSorted() { // test whether internal array is sorted (in increasing order)
     for(int i = 0; i < numList.length - 1; i++){
-      if(numList[i] != numList[i + 1] - 1){return(false);}
+      if(numList[i] > numList[i + 1] - 1){return(false);}
     }
     return(true);  
   }
