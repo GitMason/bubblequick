@@ -9,15 +9,18 @@ public abstract class SorterBase {
   private long   setCount = 0;  // counts how many times setNum has been called 
   private long   swapCount = 0; // counts how many times indexSwap has been called
   private long   compCount = 0; // counts how many times indexLessThan and valueLessThan have been called
-  
+  private String  algName = "";
+    
+    
   public SorterBase(String a, // the name of the sort algorithm, for print()
                     int n)    // size of internal array 
   {
     newScramble(n);
-    
+    algName = a;
+
     // populate an internal array of numbers 0...n-1 and scramble it
   }
-  public String getName()        { return ""; } // algorithm name
+  public String getName()        { return algName; } // algorithm name
   public int    getSize()        { return numList.length; }  // internal array length
   public long   getNumSwaps()    { return swapCount; }  // maintain counters for various operations
   public long   getNumCompares() { return compCount; }
@@ -36,6 +39,7 @@ public abstract class SorterBase {
     getCount = 0;
     setCount = 0;
     swapCount = 0;
+    compCount = 0;
   }
   
   
@@ -70,11 +74,21 @@ public abstract class SorterBase {
     // You will need to google to find out how to get java to give you random numbers 0 <= j < n
   }
   
-  public boolean isSorted() {return false;} // test whether internal array is sorted (in increasing order)
+  public boolean isSorted() { // test whether internal array is sorted (in increasing order)
+    for(int i = 0; i < numList.length - 1; i++){
+      if(numList[i] != numList[i + 1] - 1){return(false);}
+    }
+    return(true);  
+  }
+  public void addHeaders(){
+    System.out.println("ALG,N,COMPS,SWAPS,GETS,SETS,TOTAL,SORTED");
+  }
   
   public void print(boolean print_nums) {   // print all the counters, and optionally the internal array
-    System.out.print("ALG,Bubble,N," + getSize() + ",COMPS," + getNumCompares() + ",SWAPS," + getNumSwaps() + ",GETS," + getNumGets() + ",SETS," + getNumGets() + ",");
-    System.out.print("TOTAL," + getSize() + compCount + swapCount + getCount + setCount + ",");
+    System.out.print(getName() + "," + getSize() + "," + getNumCompares() + "," + getNumSwaps() + "," + getNumGets() + "," + getNumGets() + ",");
+    System.out.print(getSize() + compCount + swapCount + getCount + setCount + ",");
+    if(isSorted()){System.out.print("yes");}
+    else{System.out.print("no");}
     System.out.print("\n");
     if (print_nums) {
       for (int i = 0; i < numList.length; i++) {
