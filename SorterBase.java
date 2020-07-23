@@ -59,6 +59,13 @@ public abstract class SorterBase {
     }
   }
   
+  public void clearList(){
+    for(int i = 0; i < getSize(); i++){
+      setNum(i, 0);
+    }
+    resetCounters();
+  }
+  
   public void newScramble(int n) {     // populate internal array with values 0...n-1, scrambled
     newIncreasing(n);
     for(int i = 0; i < n; i++){

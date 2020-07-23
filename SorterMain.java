@@ -12,9 +12,9 @@ public class SorterMain {
     
     
     SorterQuick quickly = new SorterQuick(10);   // construct a quick-sorter with 1..10 scrambled
-    //quickly.print(true);                         // ...
-    //quickly.sort();
-    //quickly.print(true);
+//    quickly.print(true);                         // ...
+//    quickly.sort();
+//    quickly.print(true);
     
     // Now we'll exercise the sorters on 100, 200, 300, ... 1000 numbers
     bubbly.addHeaders();                         // write the headers for the csv file
@@ -24,10 +24,10 @@ public class SorterMain {
       bubbly.print(false);                       // print the state but not the numbers
     }
    
-//    for (int n = 100; n <= 1000; n += 100) {           // same for quick-sort
-//      quickly = new SorterQuick(n);
-//      quickly.sort();
-//      quickly.print(false);
-//    }
+    for (int n = 100; n <= 1000; n += 100) {           // same for quick-sort
+      quickly = new SorterQuick(n);
+      quickly.sort();
+      quickly.print(false);
+    }
   }
 }
